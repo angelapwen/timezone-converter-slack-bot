@@ -1,0 +1,8 @@
+
+
+if userMessage contains (xx:xx or x:xx or xpm or xam or xp.m. 
+or xa.m.) then prompt user about timezone conversion, ie 
+"do you want to this time converted to your timezone?"
+
+if userMessage contains (timejunk) and has a different user tagged, then convert timezone to original users timezone (using a timezone convert function) and send as a message. "9:00 pm for Tim is 11:00 pm for you, Will"
+
