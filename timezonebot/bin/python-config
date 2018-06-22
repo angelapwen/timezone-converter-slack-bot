@@ -1,4 +1,4 @@
-#!/Users/Paul/Desktop/timezone-converter-slack-bot/starterbot/bin/python
+#!/Users/Paul/Desktop/timezone-converter-slack-bot/timezonebot/bin/python
 
 import sys
 import getopt
