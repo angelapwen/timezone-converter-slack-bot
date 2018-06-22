@@ -1,16 +1,27 @@
 SCENARIO 1 (Possibly can be completed with just Python, slackclient):
 
-if userMessage contains (timejunk) and has a different user tagged, then convert timezone to original users timezone (using a timezone convert function) and send as a reply to message (in a thread). 
+if userMessage calls @TimezoneBot
+	if it contains another time and has a different user tagged
+		then call timezoneConvert
+		send original time, otherUser, finalTime, yourUser as a reply to message (in a thread)
+	else the message calls @TimezoneBot but did not contain the correct syntax
+		send error message to user in ephemeral message 
+		"Sorry, I didn't understand that. Please repeat your request by using the following format:
+		@TimezoneBot 9:00pm for @Tim?"
 
 eg. Will: "@TimezoneBot 9:00pm for @Tim?"
 	Call timezoneConvert, returns finalTime
 	Print original time, otherUser, finalTime, yourUser
 TimezoneBot: "9:00pm for Tim is 11:00pm for you, Will"
 
+eg2. Angela: "@TimezoneBot What time is Paul's workshop at 10am tomorrow?"
+TimezoneBot: "Sorry, I didn't understand that. Please repeat your request by using the following format:
+		@TimezoneBot 9:00pm for @Tim?"
 
 
 
-SCENARIO 2 (May need JSON for Message Buttons and formatting):
+
+SCENARIO 2 (May need JSON and ngrok for Message Buttons and formatting):
 
 if ':' in userMessage, check values to left and right of ':'
 		if values are ints, ______
