@@ -17,15 +17,16 @@ MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
 def parse_bot_commands(slack_events):
     """
         Parses a list of events coming from the Slack RTM API to find bot commands.
-        If a bot command is found, this function returns a tuple of command and channel.
+        If a bot command is found, this function returns a tuple of command, channel, event 
+	time stamp, and the user who called the command.
         If its not found, then this function returns None, None.
     """
     for event in slack_events:
         if event["type"] == "message" and not "subtype" in event:
             user_id, message = parse_direct_mention(event["text"])
             if user_id == starterbot_id:
-                return message, event["channel"], event["event_ts"] # Added thread timestamp
-    return None, None, None
+                return message, event["channel"], event["event_ts"], event["user"] 
+    return None, None, None, None
 
 def parse_direct_mention(message_text):
     """
@@ -36,21 +37,21 @@ def parse_direct_mention(message_text):
     # the first group contains the username, the second group contains the remaining message
     return (matches.group(1), matches.group(2).strip()) if matches else (None, None)
 
-def handle_command(command, channel, event_ts):
+def handle_command(command, channel, event_ts, calling_user):
     """
         Executes bot command if the command is known
     """
     # Default response is help text for the user
-    default_response = "Sorry, I didn't understand that. Please repeat your request by using the following format: @Timezonebot time 9:00pm for @username?"
+    default_response = "Hi User ID " + calling_user + " Sorry, I didn't understand that. Please repeat your request by using the following format: @Timezonebot time 9:00pm for @username?"
 
     # Finds and executes the given command, filling in response
     response = None
     # This is where you start to implement more commands!
     if command.startswith(EXAMPLE_COMMAND):
-        response = "Sure...write some more code then I can do that!"
+        response = "Hi User ID " + calling_user + " Sure...write some more code then I can do that!"
 
     if command.startswith("When" or "when"):
-	response = "I will let you know what time."
+	response = "Hi User ID " + calling_user + " I will let you know what time."
 
 
     # Sends the response back to the channel
@@ -67,9 +68,9 @@ if __name__ == "__main__":
         # Read bot's user ID by calling Web API method `auth.test`
         starterbot_id = slack_client.api_call("auth.test")["user_id"]
         while True:
-            command, channel, event_ts = parse_bot_commands(slack_client.rtm_read())
+            command, channel, event_ts, calling_user = parse_bot_commands(slack_client.rtm_read())
             if command:
-                handle_command(command, channel, event_ts)
+                handle_command(command, channel, event_ts, calling_user)
             time.sleep(RTM_READ_DELAY)
     else:
         print("Connection failed. Exception traceback printed above.")
