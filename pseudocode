@@ -1,3 +1,39 @@
+Pseudocode for Scenario 1, using the skeleton code from Starterbot:
+
+Main function:
+	If connected, print on console "Timezone bot running"
+	Find timezonebot's ID and save
+	Call parse_bot_commands
+		Return command, channel, event_ts, calling_user
+	If command:
+		Call handle_command
+	Else 
+		Print connection failed
+		
+parse_bot_commands:
+	Takes in parameters of slack_events
+	If event type is message, call parse_direct_mention_message
+	Save user_id (the user who was mentioned)
+	Save the rest of message into variable message
+	If user_id = timezonebot ID
+		Return message, channel, thread timestamp, and user who sent the original message (calling_user)
+		
+parse_direct_mention_message:
+	Takes in message_text from parse_bot_commands
+	Returns the username, and then the rest of the message
+	
+handle_command:
+	Default response = "Hi User ID " + calling_user + " Sorry, I didn't understand that. Please repeat your request by using the following format:
+		@TimezoneBot 9:00pm for @Tim?"
+	
+	Other responses:
+	Response = INSERTTEXT	
+	
+	Send the response to the appropriate channel by replying to thread 
+	
+
+
+
 SCENARIO 1 (Possibly can be completed with just Python, slackclient):
 
 if userMessage calls @TimezoneBot
