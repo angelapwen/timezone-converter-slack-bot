@@ -57,6 +57,7 @@ Other things to think of and add in:
 	user_in_message did not set timezone on slack
 	working with AM and PM
 	Need to add dates or something
+	Need to change calling_user and user_in_message from ID #s to the actual username or name
 
 
 	
