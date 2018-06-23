@@ -24,15 +24,29 @@ parse_direct_mention_message:
 	
 handle_command:
 	Default response = "Hi User ID " + calling_user + " Sorry, I didn't understand that. Please repeat your request by using the following format:
-		@TimezoneBot 9:00pm for @Tim?"
+		@TimezoneBot What time is 9:00pm for @Tim?"
 	
-	Other responses:
-	Response = INSERTTEXT	
+	Otherwise--
+	If message begins with "What time is"
+		Call parse_timezone_message
+			Find the time in message, the user in message, the timezone of user in message, the timezone of calling_user
+			If message parses correctly,
+				Call timezone_convert
+					Use time_in_message, user_in_message, the timezone of user in message, the timezone of calling_user
+					to find the converted_time for the calling_user
+				Response = time_in_message "for " user_in_message " is " final_time " for you, " calling_user
+			If message doesn't parse correctly,
+				Response = "Hi User ID " + calling_user + " Sorry, I didn't understand that. Please repeat your request by using the following format:
+		@TimezoneBot What time is 9:00pm for @Tim?"
 	
 	Send the response to the appropriate channel by replying to thread 
 	
-
-
+	
+	
+	
+	
+	
+	
 
 SCENARIO 1 (Possibly can be completed with just Python, slackclient):
 
