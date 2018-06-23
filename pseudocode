@@ -1,30 +1,62 @@
+SCENARIO 1 (Possibly can be completed with just Python, slackclient):
+
+if userMessage calls @TimezoneBot
+	if it contains another time and has a different user tagged
+		then call timezoneConvert
+		send original time, otherUser, finalTime, yourUser as a reply to message (in a thread)
+	else the message calls @TimezoneBot but did not contain the correct syntax
+		send error message to user in ephemeral message 
+		"Sorry, I didn't understand that. Please repeat your request by using the following format:
+		@TimezoneBot 9:00pm for @Tim?"
+
+eg. Will: "@TimezoneBot 9:00pm for @Tim?"
+	Call timezoneConvert, returns finalTime
+	Print original time, otherUser, finalTime, yourUser
+TimezoneBot: "9:00pm for Tim is 11:00pm for you, Will"
+
+eg2. Angela: "@TimezoneBot What time is Paul's workshop at 10am tomorrow?"
+TimezoneBot: "Sorry, I didn't understand that. Please repeat your request by using the following format:
+		@TimezoneBot 9:00pm for @Tim?"
 
 
-if userMessage contains ( ':'  or xpm or xam or xp.m. 
-or xa.m.) then prompt user about timezone conversion, ie 
-"do you want to this time converted to your timezone?"
-	if ':' in userMessage, check values to left and right of ':'
+
+
+SCENARIO 2 (May need JSON and ngrok for Message Buttons and formatting):
+
+if ':' in userMessage, check values to left and right of ':'
 		if values are ints, ______
-
-if userMessage contains (timejunk) and has a different user tagged, then convert timezone to original users timezone (using a timezone convert function) and send as a message. "9:00 pm for Tim is 11:00 pm for you, Will"
-
-def timeZoneConvert
+			then prompt all other users in channel about timezone conversion, ie 
+				"do you want to this time converted to your timezone?"
+					YES | NO
+				if YES,
+					Call timezoneConvert
+					Print original time, otherUser,finalTime, yourUser in an EPHEMERAL message
+						only visible to user
+					TimezoneBot: "9:00pm for Tim is 11:00pm for you, Will"
+				if NO,
+					Display instructions for using TimezoneBot
+					"Okay, noted. Next time, if you would like to see another Slack user's time in your 
+					time zone, simply type '@TimezoneBot #:##am/pm for @OtherUser' and you will receive
+					a private message."
+					
+					
+def timezoneConvert
 { 
 get timezone of user who was tagged using users.info (which takes as params
 the AUTH token and user ID of the user)
 
-
-get timezone of user who sent message using users.info
+get timezone of user who sent message using users.info 
 
 if timezones are different, calculate the difference and add (using positive or negative value) in hours (will require convert from seconds) the value to the sending user's time. 
 
-
-i.e. "what time is 9:00 pm for @tim?"
 user1Timezone = -23880 
 user2Timezone = -24000
-difference in timezones = user1Timezone - user2Timezone
-inHours =  120 / 60 
-"9:00 pm for Tim is 11:00 pm for you, Will"
+difference in timezones = otherUserTimezone - yourUserTimezone
+inHours =  difference / 3600
+
+finalTime = originalTime + difference
+
+return finalTime
 
 }
 
