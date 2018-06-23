@@ -24,8 +24,8 @@ def parse_bot_commands(slack_events):
         if event["type"] == "message" and not "subtype" in event:
             user_id, message = parse_direct_mention(event["text"])
             if user_id == starterbot_id:
-                return message, event["channel"]
-    return None, None
+                return message, event["channel"], event["event_ts"] # Added thread timestamp
+    return None, None, None
 
 def parse_direct_mention(message_text):
     """
@@ -36,12 +36,12 @@ def parse_direct_mention(message_text):
     # the first group contains the username, the second group contains the remaining message
     return (matches.group(1), matches.group(2).strip()) if matches else (None, None)
 
-def handle_command(command, channel):
+def handle_command(command, channel, event_ts):
     """
         Executes bot command if the command is known
     """
     # Default response is help text for the user
-    default_response = "Not sure what you mean. Try *{}*.".format(EXAMPLE_COMMAND)
+    default_response = "Sorry, I didn't understand that. Please repeat your request by using the following format: @Timezonebot time 9:00pm for @username?"
 
     # Finds and executes the given command, filling in response
     response = None
@@ -49,11 +49,16 @@ def handle_command(command, channel):
     if command.startswith(EXAMPLE_COMMAND):
         response = "Sure...write some more code then I can do that!"
 
+    if command.startswith("When" or "when"):
+	response = "I will let you know what time."
+
+
     # Sends the response back to the channel
     slack_client.api_call(
         "chat.postMessage",
         channel=channel,
-        text=response or default_response
+        text=response or default_response,
+	thread_ts=event_ts
     )
 
 if __name__ == "__main__":
@@ -62,9 +67,9 @@ if __name__ == "__main__":
         # Read bot's user ID by calling Web API method `auth.test`
         starterbot_id = slack_client.api_call("auth.test")["user_id"]
         while True:
-            command, channel = parse_bot_commands(slack_client.rtm_read())
+            command, channel, event_ts = parse_bot_commands(slack_client.rtm_read())
             if command:
-                handle_command(command, channel)
+                handle_command(command, channel, event_ts)
             time.sleep(RTM_READ_DELAY)
     else:
         print("Connection failed. Exception traceback printed above.")
