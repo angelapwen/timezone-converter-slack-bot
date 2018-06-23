@@ -23,26 +23,42 @@ parse_direct_mention_message:
 	Returns the username, and then the rest of the message
 	
 handle_command:
-	Default response = "Hi User ID " + calling_user + " Sorry, I didn't understand that. Please repeat your request by using the following format:
+	Default response = "Hi User ID " + calling_user + " Sorry, I didn't understand that. 
+		Please repeat your request by using the following format:
 		@TimezoneBot What time is 9:00pm for @Tim?"
 	
 	Otherwise--
 	If message begins with "What time is"
 		Call parse_timezone_message
-			Find the time in message, the user in message, the timezone of user in message, the timezone of calling_user
+			Find the time in message, the user in message
+			
 			If message parses correctly,
 				Call timezone_convert
-					Use time_in_message, user_in_message, the timezone of user in message, the timezone of calling_user
-					to find the converted_time for the calling_user
-				Response = time_in_message "for " user_in_message " is " final_time " for you, " calling_user
+					Find the timezone offset and timezone_name_final of user_in_message
+					Find the timezone offset and timezone_name_original of calling_user
+
+					Use time_in_message, user_in_message, the timezone offset of user in message, 
+					the timezone offset of calling_user to find the converted_time for the calling_user
+				
+				Response = time_in_message + timezone_name_original "for " user_in_message 
+						" is " final_time + timezone_name_final " for you, " calling_user
+			
 			If message doesn't parse correctly,
-				Response = "Hi User ID " + calling_user + " Sorry, I didn't understand that. Please repeat your request by using the following format:
-		@TimezoneBot What time is 9:00pm for @Tim?"
+				Response = "Hi User ID " + calling_user + " Sorry, I didn't understand that. 
+				Please repeat your request by using the following format: 
+				@TimezoneBot What time is 9:00pm for @Tim?"
 	
 	Send the response to the appropriate channel by replying to thread 
 	
 	
-	
+Other things to think of and add in:
+	Bot call was not worded correctly
+	calling_user did not set timezone on Slack
+	user_in_message did not set timezone on slack
+	working with AM and PM
+	Need to add dates or something
+
+
 	
 	
 	
