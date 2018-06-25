@@ -20,7 +20,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 * [Python](https://www.python.org/) - The language used
 * [Slack API](https://api.slack.com/) - APIs used
-* [JSON](https://www.json.org/) - Used to generate interactive buttons
 * [pip](https://pypi.org/project/pip/) and [virtualenv](https://virtualenv.pypa.io/en/latest/userguide/) - Handle Python application dependencies
 
 ## Authors
