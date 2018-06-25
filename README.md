@@ -1,5 +1,9 @@
 # timezone-converter-slack-bot
-Time Stone: A Slack bot that converts a meeting time from another user’s time zone to the one of the user who calls the bot.
+A Slack bot that converts a meeting time from another user’s time zone to the one of the user who calls the bot. 
+
+The above was our original goal; however, our Slack bot cannot do this just yet.
+
+Our bot can start a threaded message to reply to the calling user. 
 
 ## Getting Started
 
