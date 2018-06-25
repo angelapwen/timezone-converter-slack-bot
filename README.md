@@ -5,7 +5,7 @@ The above was our original goal; however, our Slack bot cannot do this just yet.
 
 Our bot can start a threaded message to reply to the calling user. 
 
-![bot replying](/Users/Paul/Desktop/timezone-converter-slack-bot/threaded.png)
+![bot replying](https://raw.githubusercontent.com/angelapwen/timezone-converter-slack-bot/master/threaded.png)
 
 ## Getting Started
 
