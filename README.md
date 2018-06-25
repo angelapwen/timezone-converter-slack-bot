@@ -5,6 +5,8 @@ The above was our original goal; however, our Slack bot cannot do this just yet.
 
 Our bot can start a threaded message to reply to the calling user. 
 
+![bot replying](/Users/Paul/Desktop/timezone-converter-slack-bot/threaded.png)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
